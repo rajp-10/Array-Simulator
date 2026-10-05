@@ -1,0 +1,87 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@theme {
+  --color-ivory: #F7F3EA;
+  --color-navy: #243447;
+  --color-sage: #8FA58B;
+  --color-sand: #D8C9B6;
+  
+  --color-ivory-dark: #EAE3D4;
+  --color-navy-light: #3A4C63;
+  --color-sage-light: #A4B8A0;
+  --color-sage-dark: #7A8E76;
+  --color-sand-light: #E8DCCB;
+  --color-sand-dark: #C4B5A2;
+
+  --shadow-sm: 0 1px 2px 0 rgba(36, 52, 71, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(36, 52, 71, 0.1), 0 2px 4px -1px rgba(36, 52, 71, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(36, 52, 71, 0.1), 0 4px 6px -2px rgba(36, 52, 71, 0.05);
+  
+  /* 3D Inspired Physical Shadows */
+  --shadow-block: 0 4px 6px -1px rgba(36, 52, 71, 0.1), 0 2px 4px -1px rgba(36, 52, 71, 0.06), inset 0 -3px 0 0 var(--color-sand-dark);
+  --shadow-block-hover: 0 10px 15px -3px rgba(36, 52, 71, 0.1), 0 4px 6px -2px rgba(36, 52, 71, 0.05), inset 0 -3px 0 0 var(--color-sand-dark);
+  --shadow-block-selected: 0 20px 25px -5px rgba(36, 52, 71, 0.15), 0 10px 10px -5px rgba(36, 52, 71, 0.04), inset 0 -4px 0 0 var(--color-sage-dark);
+  --shadow-card: 0 10px 15px -3px rgba(36, 52, 71, 0.05), 0 4px 6px -2px rgba(36, 52, 71, 0.025), inset 0 -4px 0 0 var(--color-sand-light);
+  
+  --shadow-btn: 0 4px 6px -1px rgba(36, 52, 71, 0.1), inset 0 -2px 0 0 rgba(0, 0, 0, 0.2);
+  --shadow-btn-active: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-ivory text-navy font-sans antialiased selection:bg-sage selection:text-white;
+  }
+}
+
+@layer components {
+  /* 3D Physical Buttons */
+  .btn-primary {
+    @apply px-6 py-2.5 font-bold rounded-lg transition-all duration-200 active:translate-y-[2px] active:shadow-btn-active disabled:opacity-50 disabled:pointer-events-none bg-navy text-white hover:bg-navy-light shadow-btn hover:-translate-y-0.5;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-2.5 font-bold rounded-lg border border-sand transition-all duration-200 active:translate-y-[2px] active:shadow-btn-active disabled:opacity-50 disabled:pointer-events-none bg-white text-navy hover:bg-ivory shadow-btn hover:-translate-y-0.5;
+  }
+
+  .btn-accent {
+    @apply px-6 py-2.5 font-bold rounded-lg transition-all duration-200 active:translate-y-[2px] active:shadow-btn-active disabled:opacity-50 disabled:pointer-events-none bg-sage text-white hover:bg-sage-dark shadow-btn hover:-translate-y-0.5;
+  }
+
+  /* 3D Layered Inputs */
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border border-sand shadow-inner rounded-lg focus:outline-none focus:ring-2 focus:ring-sage focus:border-sage transition-all text-navy disabled:bg-sand/30 font-medium placeholder:text-navy/40;
+  }
+
+  /* 3D Dimensional Cards */
+  .card {
+    @apply bg-white rounded-xl shadow-card border border-sand/50 transition-all duration-300;
+  }
+
+  .array-block {
+    @apply flex items-center justify-center font-mono font-bold text-lg bg-white border border-sand-dark rounded-md shadow-block transition-all duration-300 transform;
+    perspective: 1000px;
+  }
+  
+  .array-block:hover {
+    @apply shadow-block-hover -translate-y-1;
+  }
+  
+  .array-block-selected {
+    @apply bg-sage text-white -translate-y-2 shadow-block-selected border-sage-dark;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-sand-dark rounded-full hover:bg-sage;
+}
