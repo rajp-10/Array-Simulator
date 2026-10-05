@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CSSMascot } from '../components/CSSMascot';
 import { AddressCalculation } from './AddressCalculation';
 import { Insertion } from './Insertion';
 import { Deletion } from './Deletion';
@@ -15,6 +16,7 @@ type OperationType = 'address' | 'insert' | 'delete' | 'linear' | 'binary' | nul
 export const Simulator: React.FC<SimulatorProps> = ({ globalArray, setGlobalArray }) => {
   const [arrayInput, setArrayInput] = useState<string>(globalArray.join(', '));
   const [activeOperation, setActiveOperation] = useState<OperationType>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleCreateArray = () => {
     const parsed = arrayInput.split(',')
@@ -23,16 +25,32 @@ export const Simulator: React.FC<SimulatorProps> = ({ globalArray, setGlobalArra
       
     if (parsed.length > 0) {
       setGlobalArray(parsed);
-      // Reset active operation to ensure clean state with new array
       if (activeOperation) setActiveOperation(null);
     } else {
       alert("Please enter a valid comma-separated list of numbers.");
     }
   };
 
+  const handleOperationSelect = (op: OperationType) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveOperation(op);
+      setIsTransitioning(false);
+    }, 1500); // 1.5 seconds flying transition
+  };
+
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-8 animate-in fade-in duration-500 relative">
       
+      {/* FLYING MASCOT OVERLAY */}
+      {isTransitioning && (
+        <div className="fixed inset-0 pointer-events-none z-[100] flex items-center justify-center overflow-hidden" style={{ perspective: '1200px' }}>
+          <div className="w-32 h-32 md:w-40 md:h-40 relative animate-[css-fly-across_1.5s_cubic-bezier(0.4,0,0.2,1)_forwards] preserve-3d">
+            <CSSMascot isFlying={true} />
+          </div>
+        </div>
+      )}
+
       {/* ARRAY INPUT SECTION */}
       <div className="card p-6 md:p-8">
         <h2 className="text-xl font-bold mb-2">YOUR ARRAY</h2>
@@ -59,10 +77,13 @@ export const Simulator: React.FC<SimulatorProps> = ({ globalArray, setGlobalArra
           <div className="flex gap-4 min-w-max pb-4">
             {globalArray.map((val, idx) => (
               <div key={idx} className="flex flex-col items-center gap-2">
-                <div className="array-block w-16 h-16">
+                <div className="array-block w-16 h-16 relative">
                   {val}
+                  <div className="absolute -bottom-12 pointer-events-none">
+                    <CSSMascot isMini={true} />
+                  </div>
                 </div>
-                <div className="text-xs font-mono text-navy/60 font-bold">{idx}</div>
+                <div className="text-xs font-mono text-navy/60 font-bold mt-10">{idx}</div>
               </div>
             ))}
           </div>
@@ -75,31 +96,31 @@ export const Simulator: React.FC<SimulatorProps> = ({ globalArray, setGlobalArra
           <OperationCard 
             title="01. ARRAY ADDRESS CALCULATION"
             desc="Calculate the memory address of a specific element in 1D and 2D arrays."
-            onClick={() => setActiveOperation('address')}
+            onClick={() => handleOperationSelect('address')}
           />
           <OperationCard 
             title="02. ARRAY INSERTION"
             desc="Insert a new element at a specific index and watch elements shift right."
-            onClick={() => setActiveOperation('insert')}
+            onClick={() => handleOperationSelect('insert')}
           />
           <OperationCard 
             title="03. ARRAY DELETION"
             desc="Remove an element from a specific index and watch elements shift left."
-            onClick={() => setActiveOperation('delete')}
+            onClick={() => handleOperationSelect('delete')}
           />
           <OperationCard 
             title="04. LINEAR SEARCH"
             desc="Search for an element sequentially from the first index to the last."
-            onClick={() => setActiveOperation('linear')}
+            onClick={() => handleOperationSelect('linear')}
           />
           <OperationCard 
             title="05. BINARY SEARCH"
             desc="Efficiently search for an element in a sorted array using divide and conquer."
-            onClick={() => setActiveOperation('binary')}
+            onClick={() => handleOperationSelect('binary')}
           />
         </div>
       ) : (
-        <div className="card p-6 md:p-8 animate-in slide-in-from-bottom-4 duration-300">
+        <div className="card p-6 md:p-8 animate-in fade-in duration-300">
           <button 
             onClick={() => setActiveOperation(null)}
             className="btn-secondary text-sm mb-6 flex items-center gap-2"

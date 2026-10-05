@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CSSMascot } from '../components/CSSMascot';
 import { cn } from '../utils/cn';
 
 export function BinarySearch({ globalArray }: { globalArray: number[] }) {
@@ -161,7 +162,7 @@ export function BinarySearch({ globalArray }: { globalArray: number[] }) {
                               scale: isFound ? 1.1 : 1
                             }}
                             className={cn(
-                              "w-14 h-14 array-block transition-transform",
+                              "w-14 h-14 mb-12 array-block transition-transform relative",
                               isFound ? "array-block-selected z-20" :
                               isMid ? "border-sage shadow-block-hover -translate-y-1 z-10 text-navy" :
                               isLeft || isRight ? "border-navy-light shadow-block-hover -translate-y-0.5 z-10 text-navy" :
@@ -169,6 +170,13 @@ export function BinarySearch({ globalArray }: { globalArray: number[] }) {
                             )}
                           >
                             <span>{val}</span>
+                            {(isMid || isFound) && (
+                              <motion.div layoutId="main-mascot" className="w-10 h-10 absolute -bottom-14 z-30 pointer-events-none">
+                                <div className="absolute inset-0 pointer-events-none">
+                                  <CSSMascot isMini={true} isActive={isMid || isFound} />
+                                </div>
+                              </motion.div>
+                            )}
                           </motion.div>
                           
                           <div className="h-6 flex flex-col items-center mt-1">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { cn } from '../utils/cn';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CSSMascot } from '../components/CSSMascot';
 
 type ArrayDimension = '1D' | '2D';
 
@@ -164,13 +165,18 @@ export function AddressCalculation({ globalArray = [] }: { globalArray?: number[
                           <motion.div 
                             animate={{ y: isTarget ? -4 : 0 }}
                             className={cn(
-                              "w-14 h-14 array-block transition-transform",
+                              "w-14 h-14 array-block transition-transform relative",
                               isTarget 
-                                ? "array-block-selected z-10" 
+                                ? "array-block-selected z-20" 
                                 : "text-navy"
                             )}
                           >
                             {val}
+                            {isTarget && (
+                              <motion.div layoutId="main-mascot" className="absolute inset-0 pointer-events-none z-30">
+                                <CSSMascot isMini={true} isActive={true} />
+                              </motion.div>
+                            )}
                           </motion.div>
                           <span className={cn("text-[10px] font-mono font-bold transition-colors", isTarget ? "text-sage" : "text-navy/50")}>
                             {addr}
@@ -200,16 +206,21 @@ export function AddressCalculation({ globalArray = [] }: { globalArray?: number[
                             <motion.div 
                               animate={{ y: isTarget ? -2 : 0 }}
                               className={cn(
-                                "w-12 h-12 sm:w-14 sm:h-14 flex flex-col items-center justify-center font-mono font-bold text-xs bg-white border border-sand-dark rounded-md shadow-block transition-all duration-300 transform",
+                                "w-12 h-12 sm:w-14 sm:h-14 flex flex-col items-center justify-center font-mono font-bold text-xs bg-white border border-sand-dark rounded-md shadow-block transition-all duration-300 transform relative",
                                 isTarget 
-                                  ? "bg-sage text-white -translate-y-2 shadow-block-selected border-sage-dark z-10" 
-                                  : "hover:shadow-block-hover hover:-translate-y-1 text-navy"
+                                  ? "bg-sage text-white -translate-y-2 shadow-block-selected border-sage-dark z-20" 
+                                  : "hover:shadow-block-hover hover:-translate-y-1 text-navy z-10"
                               )}
                             >
                               <span>[{i}][{j}]</span>
                               <div className={cn("text-[9px] font-mono mt-1", isTarget ? "text-white/80" : "text-navy/50")}>
                                 {addr}
                               </div>
+                              {isTarget && (
+                                <motion.div layoutId="main-mascot" className="absolute inset-0 pointer-events-none z-30">
+                                  <CSSMascot isMini={true} isActive={true} />
+                                </motion.div>
+                              )}
                             </motion.div>
                           </div>
                         );

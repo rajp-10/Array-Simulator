@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CSSMascot } from '../components/CSSMascot';
 import { cn } from '../utils/cn';
 
 export function LinearSearch({ globalArray }: { globalArray: number[] }) {
@@ -113,12 +114,19 @@ export function LinearSearch({ globalArray }: { globalArray: number[] }) {
                               scale: isFound ? 1.1 : 1
                             }}
                             className={cn(
-                              "w-14 h-14 array-block",
+                              "w-14 h-14 mb-12 array-block relative",
                               isFound ? "array-block-selected z-20" :
                               isCurrent ? "border-sage shadow-block-hover -translate-y-1 z-10 text-navy" : ""
                             )}
                           >
                             <span>{val}</span>
+                            {(isCurrent || isFound) && (
+                              <motion.div layoutId="main-mascot" className="w-10 h-10 absolute -bottom-14 z-30 pointer-events-none">
+                                <div className="absolute inset-0 pointer-events-none">
+                                  <CSSMascot isMini={true} isActive={isCurrent} />
+                                </div>
+                              </motion.div>
+                            )}
                           </motion.div>
                           {isCurrent && !isFound && (
                             <div className="text-[10px] uppercase font-bold text-sage flex flex-col items-center">

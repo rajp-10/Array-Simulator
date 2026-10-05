@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CSSMascot } from '../components/CSSMascot';
 import { cn } from '../utils/cn';
 
 export function Insertion({ globalArray, setGlobalArray }: { globalArray: number[], setGlobalArray: (arr: number[]) => void }) {
@@ -129,12 +130,17 @@ export function Insertion({ globalArray, setGlobalArray }: { globalArray: number
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1, y: highlightedIndex === idx ? -4 : 0 }}
                           className={cn(
-                            "w-14 h-14 array-block",
+                            "w-14 h-14 mb-8 array-block relative",
                             item.val === "" ? "bg-sand/10 border-sand/30 border-dashed shadow-none" :
                             highlightedIndex === idx ? "array-block-selected z-10" : ""
                           )}
                         >
                           <span>{item.val}</span>
+                          {item.val !== "" && (
+                            <div className="absolute -bottom-12 pointer-events-none">
+                              <CSSMascot isMini={true} />
+                            </div>
+                          )}
                         </motion.div>
                         {idx === insertIndex && !animating && (
                           <div className="text-[10px] uppercase font-bold text-sage flex flex-col items-center">

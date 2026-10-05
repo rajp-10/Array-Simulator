@@ -85,3 +85,17 @@
 ::-webkit-scrollbar-thumb {
   @apply bg-sand-dark rounded-full hover:bg-sage;
 }
+
+@layer utilities {
+  @keyframes css-fly-across {
+    0% { transform: translate3d(-50vw, 30vh, -200px) scale(0.5) rotateX(20deg) rotateY(45deg); opacity: 0; }
+    20% { opacity: 1; transform: translate3d(-20vw, 10vh, 0px) scale(0.8) rotateX(10deg) rotateY(20deg); }
+    50% { transform: translate3d(0, -15vh, 100px) scale(1.2) rotateX(-5deg) rotateY(0deg); }
+    80% { opacity: 1; transform: translate3d(20vw, 0vh, 0px) scale(0.8) rotateX(10deg) rotateY(-20deg); }
+    100% { transform: translate3d(50vw, -30vh, -200px) scale(0.5) rotateX(20deg) rotateY(-45deg); opacity: 0; }
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+}
